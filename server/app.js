@@ -11,7 +11,7 @@ let mongoose = require('mongoose');
 // URI
 let config = require('./config/db');
 
-mongoose.connect(config.URI);
+mongoose.connect(process.env.URI || config.URI);
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -19,7 +19,9 @@ db.once('open', () => {
   console.log("Conneced to MongoDB...");
 });
 
-let index = require('./routes/index');
+//define routers
+let index = require('./routes/index'); //top level routes
+let games = require('./routes/games'); //routes for games
 
 let app = express();
 
@@ -35,7 +37,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../client')));
 
+//route redirect
 app.use('/', index);
+app.use('/games', games);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
