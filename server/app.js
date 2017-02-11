@@ -9,7 +9,7 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 
 // URI
-let config = require('/config/db');
+let config = require('./config/db');
 
 mongoose.connect(config.URI);
 
@@ -33,7 +33,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../client')));
 
 app.use('/', index);
 

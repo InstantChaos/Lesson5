@@ -10,4 +10,4 @@ let gamesSchema = mongoose.Schema({
   collection: "games"
 });
 
-module.exports = mongoose.model('games', gameSchema);
+module.exports = mongoose.model('games', gamesSchema);
