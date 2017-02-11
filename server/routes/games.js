@@ -39,7 +39,7 @@ router.post('/add', (req,res,next) => {
         "rating": req.body.rating
     });
 
-    game.create(newGame, (err, game) => {
+    game.create(newGame, (err, games) => {
         if(err){
             console.log(err);
             res.end(err);
@@ -63,7 +63,7 @@ router.get('/:id', (req,res,next)=>{
             //show the game details view
             res.render('games/details', {
                 title: 'Games Details',
-                game: games
+                games: games
             })
         }
     });
@@ -92,5 +92,19 @@ router.post('/:id', (req,res,next)=>{
 
 });
 
+//GET - process the delete by user id
+router.get('/delete/:id', (req,res,next) =>{
+    let id = req.params.id;
+
+    game.remove({_id: id}, (err) =>{
+        if(err){
+            console.log(err);
+            res.end(err);
+        }else{
+            //refresh the games list
+            res.redirect('/games');
+        }
+    });
+});
 
 module.exports = router;
